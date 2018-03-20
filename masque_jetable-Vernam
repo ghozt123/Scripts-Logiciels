@@ -85,7 +85,7 @@ void welcome_message()
 
 int main()
 {
-	char *buf = (char*) malloc(svernam-maskizeof(char)*1);
+	char *buf = (char*) malloc(sizeof(char)*1);
 
 	welcome_message();
 	puts("\n[1] - Chiffrer\n");
