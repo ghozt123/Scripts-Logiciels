@@ -1,115 +1,106 @@
-/******************************************************************************************
-
-  Copyright 2017-2018
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-******************************************************************************************/
-// DEVELOPED by ghozt123
+// DEVELOPED by wil.tor
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void       __encrypt_cesar_hash_algorithm();
-void       __decrypt_cesar_hash_algorithm();
-void       __decrypt_cesar_hash_algorithm()
+#define BUFF_SIZE 150
+
+
+void encrypt_cesar_algorithm();
+void decrypt_cesar_algorithm();
+void decrypt_cesar_algorithm()
 {
-	char *decrypt_input_buffer = (char *)malloc(sizeof(char)*100);
-	char decrypt_res;
-  int k, decrypt_key;
+	char decryptFunctionBuffer[BUFF_SIZE+1];
+	char decryptFunctionRes;
+    int k, decryptFunctionKey;
 
-		puts("\n-Texte à déchiffrer : ");
-    fgets(decrypt_input_buffer,100,stdin);
+	puts("\n-Texte à déchiffrer : ");
+    fgets(decryptFunctionBuffer,100,stdin);
     puts("-Décalage (en chiffre) : ");
-    scanf("%d", &decrypt_key);
+    scanf("%d", &decryptFunctionKey);
 
-	   for(k = 0; decrypt_input_buffer[k] != '\0'; ++k){
-        decrypt_res = decrypt_input_buffer[k];
+	   for(k = 0; decryptFunctionBuffer[k] != '\0'; ++k){
+        decryptFunctionRes = decryptFunctionBuffer[k];
 
-        if(decrypt_res >= 'a' && decrypt_res <= 'z'){
-            decrypt_res = decrypt_res - decrypt_key;
+        if(decryptFunctionRes >= 'a' && decryptFunctionRes <= 'z'){
+            decryptFunctionRes = decryptFunctionRes - decryptFunctionKey;
 
-            if(decrypt_res < 'a'){
-                decrypt_res = decrypt_res + 'z' - 'a' + 1;
+            if(decryptFunctionRes < 'a'){
+                decryptFunctionRes = decryptFunctionRes + 'z' - 'a' + 1;
             }
 
-            decrypt_input_buffer[k] = decrypt_res;
+            decryptFunctionBuffer[k] = decryptFunctionRes;
         }
-        else if(decrypt_res >= 'A' && decrypt_res <= 'Z'){
-            decrypt_res = decrypt_res - decrypt_key;
+        else if(decryptFunctionRes >= 'A' && decryptFunctionRes <= 'Z'){
+            decryptFunctionRes = decryptFunctionRes - decryptFunctionKey;
 
-            if(decrypt_res < 'A'){
-                decrypt_res = decrypt_res + 'Z' - 'A' + 1;
+            if(decryptFunctionRes < 'A'){
+                decryptFunctionRes = decryptFunctionRes + 'Z' - 'A' + 1;
             }
 
-            decrypt_input_buffer[k] = decrypt_res;
+            decryptFunctionBuffer[k] = decryptFunctionRes;
         }
     }
 
-    printf("-Message déchiffrer : %s", decrypt_input_buffer);
+    printf("-Message déchiffrer : %s", decryptFunctionBuffer);
 }
 
-void       __encrypt_cesar_hash_algorithm()
+void encrypt_cesar_algorithm()
 {
-	char *encrypt_input_buffer = (char *)malloc(sizeof(char)*100);
-	char res;
-  int i, key;
+	char encryptFunctionBuffer[BUFF_SIZE+1];
+    char encryptFunctionRes;
+    int i, encryptFunctionKey;
 
     puts("-Texte à chiffrer : ");
-    fgets(encrypt_input_buffer,100,stdin);
+    fgets(encryptFunctionBuffer,100,stdin);
     puts("-Décalage (en chiffre) : ");
-    scanf("%d", &key);
+    scanf("%d", &encryptFunctionKey);
 
-    for(i = 0; encrypt_input_buffer[i] != '\0'; ++i){
-        res = encrypt_input_buffer[i];
+    for(i = 0; encryptFunctionBuffer[i] != '\0'; ++i){
+        encryptFunctionRes = encryptFunctionBuffer[i];
 
-        if(res >= 'a' && res <= 'z'){
-            res = res + key;
+        if(encryptFunctionRes >= 'a' && encryptFunctionRes <= 'z'){
+            encryptFunctionRes = encryptFunctionRes + encryptFunctionKey;
 
-            if(res > 'z'){
-                res = res - 'z' + 'a' - 1;
+            if(encryptFunctionRes > 'z'){
+                encryptFunctionRes = encryptFunctionRes - 'z' + 'a' - 1;
             }
 
-            encrypt_input_buffer[i] = res;
+            encryptFunctionBuffer[i] = encryptFunctionRes;
         }
-        else if(res >= 'A' && res <= 'Z'){
-            res = res + key;
+        else if(encryptFunctionRes >= 'A' && encryptFunctionRes <= 'Z'){
+            encryptFunctionRes = encryptFunctionRes + encryptFunctionKey;
 
-            if(res > 'Z'){
-                res = res - 'Z' + 'A' - 1;
+            if(encryptFunctionRes > 'Z'){
+                encryptFunctionRes = encryptFunctionRes - 'Z' + 'A' - 1;
             }
 
-            encrypt_input_buffer[i] = res;
+            encryptFunctionBuffer[i] = encryptFunctionRes;
         }
     }
-		printf("-Texte déchiffrer : %s", encrypt_input_buffer);
+
+    		printf("-Texte déchiffrer : %s", encryptFunctionBuffer);
 }
 
-int        main(int argc, char **argv)
+int main()
 {
-	char *main_buffer = (char *)malloc(sizeof(char)*1);
+	char *buf = (char*)malloc(sizeof(char)*1);
 
-	puts("\n -[1] Déchiffrer \n\n -[2] Chiffrer \n");
-	fgets(main_buffer, sizeof(main_buffer), stdin);
+	puts("\n -[1] Chiffrer \n\n -[2] Dechiffrer \n");
+	fgets(buf, sizeof(buf), stdin);
 
-	switch(*main_buffer)
+	switch(*buf)
 	{
-		case'2':
-		__encrypt_cesar_hash_algorithm();
-		break;
 		case'1':
-		__decrypt_cesar_hash_algorithm();
+		encrypt_cesar_algorithm();
 		break;
+		case'2':
+		decrypt_cesar_algorithm();
+		break;
+        default:
+        puts("1 ou 2\n");
+        exit(1);
 	}
 
 	return 0;
